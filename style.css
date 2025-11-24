@@ -1,0 +1,221 @@
+:root {
+    --bg1:#1b1024;
+    --bg2:#251733;
+    --petal-light:#ffd8ff;
+    --petal-mid:#f2a9ff;
+    --petal-dark:#d66de0;
+    --center:#ffcf5b;
+    --stem:#2f7b4c;
+    --leaf:#3b955d;
+  }
+  
+  /* Genel layout */
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  
+  body{
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+    background:
+      radial-gradient(circle at 10% 0%, #3a244f 0, transparent 55%),
+      radial-gradient(circle at 90% 100%, #2d1f46 0, transparent 55%),
+      linear-gradient(180deg,var(--bg1),var(--bg2));
+    color:#f7efff;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    text-align:center;
+  }
+  
+  h1{
+    font-size:clamp(18px,3vw,22px);
+    letter-spacing:.05em;
+  }
+  
+  .hint{
+    font-size:12px;
+    opacity:.8;
+  }
+  
+  button{
+    margin-top:10px;
+    border:none;
+    border-radius:999px;
+    padding:7px 16px;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    background:#ffcf5b;
+    color:#40223f;
+    box-shadow:0 7px 18px #0007;
+    transition:.2s;
+  }
+  button:hover{
+    transform:translateY(-1px);
+    box-shadow:0 11px 24px #0009;
+  }
+  
+  /* Sahne */
+  .scene{
+    width:min(320px,80vw);
+    aspect-ratio:1/1;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  
+  .chrysanthemum{
+    position:relative;
+    width:220px;
+    height:220px;
+    filter:drop-shadow(0 20px 40px #000a);
+    cursor:pointer;
+    transform-origin:50% 60%;
+  }
+  
+  /* Merkez */
+  .center{
+    position:absolute;
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, #fff7d6 0, var(--center) 40%, #d48b1c 100%);
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    box-shadow:0 0 18px #ffefaa80;
+  }
+  
+  /* Sap ve yapraklar */
+  .stem{
+    position:absolute;
+    width:14px;
+    height:160px;
+    background:linear-gradient(180deg,#4ba26a,var(--stem));
+    left:50%;
+    top:60%;
+    transform:translateX(-50%);
+    border-radius:999px;
+  }
+  
+  .leaf{
+    position:absolute;
+    width:70px;
+    height:120px;
+    background:radial-gradient(circle at 20% 20%, #9be3aa 0, var(--leaf) 60%, #1c5a3a 100%);
+    top:65%;
+    border-radius:80% 10% 80% 10%;
+    filter:brightness(1.05);
+    opacity:0;
+    transform-origin:top center;
+  }
+  
+  .leaf-left{
+    left:50%;
+    transform:translateX(-70%) rotate(8deg) scale(0.2);
+  }
+  .leaf-right{
+    left:50%;
+    transform:translateX(-10%) rotate(-6deg) scale(0.2);
+  }
+  
+  /* Petaller */
+  .petal{
+    position:absolute;
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+    transform:
+      rotate(calc(var(--i) * 15deg));
+    transform-origin:50% 50%;
+  }
+  
+  .petal-inner{
+    position:absolute;
+    width:26px;
+    height:110px;
+    border-radius:999px;
+    left:50%;
+    top:50%;
+    transform:
+      translate(-50%,-82%)
+      scale(0.05);
+    transform-origin:50% 100%;
+    background:
+      linear-gradient(180deg,var(--petal-light),var(--petal-mid) 45%,var(--petal-dark));
+    box-shadow:0 0 10px #ffbfff40;
+    opacity:0;
+  }
+  
+  /* ---------- ANİMASYON ---------- */
+  .chrysanthemum.bloom .petal-inner{
+    animation:bloom .7s cubic-bezier(.25,.8,.2,1) forwards;
+    animation-delay:calc(var(--i) * 0.03s);
+  }
+  .chrysanthemum.bloom .leaf-left{
+    animation:leafL .7s cubic-bezier(.25,.8,.2,1) .2s forwards;
+  }
+  .chrysanthemum.bloom .leaf-right{
+    animation:leafR .7s cubic-bezier(.25,.8,.2,1) .25s forwards;
+  }
+  .chrysanthemum.bloom .center{
+    animation:centerPop .6s cubic-bezier(.25,.8,.2,1) .18s forwards;
+  }
+  
+  .chrysanthemum.bloom{
+    animation:breathe 4s ease-in-out 1s infinite;
+  }
+  
+  @keyframes bloom{
+    0%{
+      transform:translate(-50%,-82%) scale(0.05);
+      opacity:0;
+    }
+    70%{
+      opacity:1;
+    }
+    100%{
+      transform:translate(-50%,-82%) scale(1);
+      opacity:1;
+    }
+  }
+  
+  @keyframes leafL{
+    0%{ opacity:0; transform:translateX(-70%) rotate(18deg) scale(0.2);}
+    100%{ opacity:1; transform:translateX(-70%) rotate(0deg) scale(1);}
+  }
+  @keyframes leafR{
+    0%{ opacity:0; transform:translateX(-10%) rotate(-18deg) scale(0.2);}
+    100%{ opacity:1; transform:translateX(-10%) rotate(0deg) scale(1);}
+  }
+  @keyframes centerPop{
+    0%{ transform:translate(-50%,-50%) scale(.4); }
+    80%{ transform:translate(-50%,-50%) scale(1.05); }
+    100%{ transform:translate(-50%,-50%) scale(1); }
+  }
+  
+  @keyframes breathe{
+    0%,100%{ transform:scale(1); }
+    50%{ transform:scale(1.03); }
+  }
+  
+  /* Tıklayınca dönme efekti */
+  .chrysanthemum.spin{
+    animation:spin 10s linear infinite;
+  }
+  .chrysanthemum.spin.bloom{
+    animation:
+      spin 12s linear infinite,
+      breathe 4s ease-in-out 1s infinite;
+  }
+  @keyframes spin{
+    to{ transform:rotate(360deg); }
+  }
+  
+  /* Hover hafif parlatma */
+  .chrysanthemum:hover .petal-inner{
+    box-shadow:0 0 18px #ffceff80;
+  }
