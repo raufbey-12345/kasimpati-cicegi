@@ -19,7 +19,7 @@
       radial-gradient(circle at 10% 0%, #3a244f 0, transparent 55%),
       radial-gradient(circle at 90% 100%, #2d1f46 0, transparent 55%),
       linear-gradient(180deg,var(--bg1),var(--bg2));
-    color:#f7efff;
+    color:#ffb6c1; /* lightpink */;
     display:flex;
     flex-direction:column;
     align-items:center;
